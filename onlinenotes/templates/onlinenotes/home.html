@@ -1,0 +1,21 @@
+{% extends 'onlinenotes/base.html' %}
+{% load static %}
+{% block content %}
+<div class="page-header header-filter" data-parallax="true"
+style="background-image: url('/static/assets/img/notes1.jpg')">
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <h1 class="title">Study Notes Sharing Site</h1>
+      <h4>Online study notes sharing</h4>
+      <br>
+      <a href="{% url 'stulogin' %}" class="btn btn-danger btn-raised btn-lg">
+        Login
+      </a>
+
+    </div>
+  </div>
+</div>
+</div>
+
+{% endblock %}
