@@ -16,7 +16,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js" integrity="sha384-LtrjvnR4Twt/qOuYxE721u19sVFLVSA4hf/rRt6PrZTmiPltdZcI7q7PXQBYTKyf" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css" integrity="sha384-wESLQ85D6gbsF459vf1CiZ2+rr+CsxRY0RpiF1tLlQpDnAgg6rwdsUF1+Ics2bni" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/admindash.css' %}">
-    <title>Document</title>
+    <title>Notes</title>
 </head>
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
     <!-- Navigation-->
@@ -35,8 +35,8 @@
           </li>
           <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
             <a class="nav-link" href="{% url 'profile' user.id %}">
-              <i class="fa fa-fw fa-area-chart"></i>
-              <span class="nav-link-text">Profile</span>
+              <i class="fa fa-user" aria-hidden="true"></i>
+              <span class="nav-link-text"> Profile</span>
             </a>
           </li>
           <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
@@ -46,29 +46,38 @@
             </a>
           </li>
           <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+            <a href="{% url 'changepass' user.id %}" class="nav-link">
+              <i class="fa fa-key" aria-hidden="true"></i>
+              <span class="nav-link-text">Change Password</span>
+            </a>
+            
+          </li>
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
             <a href="{% url 'createnotes' user.id %}" class="nav-link">
               <i class="fa fa-fw fa-file" aria-hidden="true"></i>
               <span class="nav-link-text">Create Notes</span>
             </a>
             
           </li>
-          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
-            <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
+            <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
               <i class="fa fa-fw fa-file"></i>
               <span class="nav-link-text">Notes</span>
             </a>
-            <ul class="sidenav-second-level collapse" id="collapseComponents">
-                <li>
-                    <a href="{% url 'uploadnotes' user.id %}">Upload Notes</a>
-                </li>
-                <li>
-                    <a href="{% url 'viewallnotes' user.id %}">View All Notes</a>
-                </li>
-                <li>
-                    <a href="{% url 'viewmynotes' user.id %}">View My notes</a>
-                </li>
+            <ul class="sidenav-second-level collapse" id="collapseExamplePages">
+              <li>
+                <a href="{% url 'uploadnotes' user.id %}">Upload Notes</a>
+              </li>
+              <li>
+                <a href="{% url 'viewallnotes' user.id %}">View All Notes</a>
+              </li>
+              <li>
+                <a href="{% url 'viewmynotes' user.id %}">View My notes</a>
+              </li>
+              
             </ul>
           </li>
+          
         </ul>
         <ul class="navbar-nav sidenav-toggler">
           <li class="nav-item">
@@ -79,119 +88,65 @@
         </ul>
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <form class="form-inline my-2 my-lg-0 mr-lg-2" action="{% url 'search' %}" method="get">
-              <div class="input-group">
-                
-              </div>
-            </form>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" href="{% url 'logout' %}" data-toggle="modal" data-target="#exampleModal">
               <i class="fa fa-fw fa-sign-out"></i>Logout</a>
           </li>
         </ul>
       </div>
     </nav>
-
     <div class="content-wrapper">
       <div class="container-fluid">
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
-            <a href="{% url 'studashboard' user.id %}">Dashboard</a>
+            <a href="#">Dashboard</a>
           </li>
-          <li class="breadcrumb-item active">Edit Profile</li>
+          <li class="breadcrumb-item active">My Dashboard</li>
         </ol>
-        
-        <!-- <div class="row">
-            <div class="col-md-6 ml-auto mr-auto">
-              <div class="profile">
-                <div class="avatar">
-                  <img src="{% static 'assets/img/faces/christian1.jpg' %}" alt="Circle Image" class="img-raised rounded-circle img-fluid">
-                  
-                </div>                        
-              </div>                      
-            </div>
-        </div> -->
-
-        <div class="row container">
-            <div class="col-md-12">
-                <div class="card" style="width: 60rem; margin:auto;padding: 2% 10% 2% 10%;background-color: rgb(224, 239, 241);">
-                    <div class="card-text">
-                        <h1 class="title" align="center" style="color: purple;font-weight: bold;">Edit Profile</h1>
-                    </div>
-                    <br>
-                    <p style="text-align: center; font-size: 1rem" class="text-primary">{{error_message}}</p>
-                    <br>
-                    <div class="card-body">
-                        <form class="form" method="POST" action="">
-                            {% csrf_token %}
-
-                            <div class="row">
-                                <div class="col-md-12 pl-md-1">
-                                    <div class="form-group">
-                                        <label for="fname" style="font-weight:bold; font-size: 17px;">First Name: </label>
-                                        <input id="fname" type="text" class="form-control" style="font-size: 15px;" value={{user.first_name}} name="fname" required="required" />
-                                    </div>
-                                </div>                                
-                                    
-                                <div class="col-md-12 pl-md-1">
-                                    <div class="form-group">
-                                        <label for="lname" style="font-weight:bold; font-size: 17px;">Last Name: </label>
-                                        <input id="lname" type="text" class="form-control" style="font-size: 15px;" value={{user.last_name}} name="lname" required="required" />
-                                    </div>
-                                </div>
-                            </div>
-                                
-
-                            <div class="row">
-                            
-                                <div class="col-md-12 pl-md-1">
-                                    <div class="form-group">
-                                        <label for="contact" style="font-weight:bold; font-size: 17px;">Contact: </label>
-                                        <input id="contact" type="text" class="form-control" style="font-size: 15px;" value={{fm.contact}} name="contact" required="required" />
-                                    </div>
-                                </div> 
-                                                           
-                                <div class="col-md-12 pl-md-1">
-                                    <div class="form-group">
-                                        <label for="email" style="font-weight:bold; font-size: 17px;">Email ID: </label>
-                                        <input id="email" type="email" class="form-control" style="font-size: 15px;" value={{user.email}} name="email" required="required" />
-                                    </div>
-                                </div>
-                                        
-                            </div>
-
-                            
-
-                            <div class="row">
-                                <div class="col-md-12 pl-md-1">
-                                        <div class="form-group">
-                                            <label for="branch" style="font-weight:bold; font-size: 17px;"> Branch: </label>
-                                            <select name="branch" class="form-control" id="branch" style="font-size: 15px;" value={{fm.branch}} required="required">
-                                                <option value="CSE">CSE</option>
-                                                <option value="IT">IT</option>
-                                                <option value="ENTC">ENTC</option>
-                                                <option value="EL">EL</option>
-                                                <option value="CIVIL">CIVIL</option>
-                                                <option value="MECH">MECH</option>
-                                            </select>
-                                        </div>
-                                </div>
-                                    
-                            </div><br>
-
-                            <div>
-                                <button type="submit" class="btn btn-primary btn-lg" style="margin: 0% 30% 0% 40%;">Save Profile</button>
-                            </div>
-
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!-- Icon Cards-->
        
-    </div>
+        <!-- Example DataTables Card-->
+        <div class="card mb-3">
+          <div class="card-header">
+            <i class="fa fa-table"></i> Created Notes</div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                      <th>Sr. No</th>
+                      <th>Title</th>
+                      <th>Read</th>
+                      <th>Delete</th>
+                    </tr>
+                  </thead>
+                  <tfoot>
+                    <tr>
+                      <th>Sr. No</th>
+                      <th>Title</th>
+                      <th>Read</th>
+                      <th>Delete</th>
+                    </tr>
+                  </tfoot>
+                  <tbody>
+  
+                    {% for i in create %}
+  
+                      <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{i.title}}</td>
+                        <td><a href="{% url 'showinfo' i.id %}" class="btn btn-warning" style="font-size: 12px;">Read</a></td>
+                        <td><a href="{% url 'deletecreatednotes' i.id %}" class="btn btn-danger" style="font-size: 12px;">Delete</a></td>
+                      </tr>
+
+                    {% endfor %}
+                    
+              </table>
+            </div>
+          </div>
+          <div class="card-footer small text-muted"></div>
+        </div>
+      </div>
       <!-- /.container-fluid-->
       <!-- /.content-wrapper-->
       <footer class="sticky-footer">

@@ -28,7 +28,10 @@ urlpatterns = [
     path('viewallnotes/<int:id>/', views.viewallnotes, name='viewallnotes'),
     path('viewmynotes/<int:id>/', views.viewmynotes, name='viewmynotes'),
     path('searchnotes/', views.searchnotes, name='searchnotes'),
-
+    path('createnotes/<int:id>/', views.createnotes, name='createnotes'),
+    path('showcreatednotes/<int:id>/', views.showcreatednotes, name='showcreatednotes'),
+    path('showinfo/<int:id>/', views.showinfo, name='showinfo'),
+    path('deletecreatednotes/<int:id>/', views.deletecreatednotes, name='deletecreatednotes'),
 
 
 ]

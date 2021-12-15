@@ -4,7 +4,7 @@ from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as loginuser,logout as logoutuser
-from onlinenotes.models import signup
+from onlinenotes.models import signup,creatednotes
 import datetime
 from django.http import HttpResponse, JsonResponse
 
@@ -50,8 +50,10 @@ def studashboard(request,id):
     user = User.objects.get(id=id)
     mynote = notes.objects.all().filter(user=user)
     cnt1 = mynote.count()
+    createnote = creatednotes.objects.all().filter(user=user)
+    cnt2 = createnote.count()
     noti = notification.objects.all().order_by("date").reverse()
-    return render(request,'onlinenotes/studashboard.html',{'allnote':allnote,'cnt':cnt,'cnt1':cnt1,'mynote':mynote,'noti':noti})
+    return render(request,'onlinenotes/studashboard.html',{'allnote':allnote,'cnt':cnt,'cnt1':cnt1,'mynote':mynote,'cnt2':cnt2,'noti':noti})
 
 def stulogin(request):
     if not request.user.is_authenticated:
@@ -238,7 +240,9 @@ def uploadnotes(request,id):
     user = User.objects.get(id=id)
     mynote = notes.objects.all().filter(user=user)
     cnt1 = mynote.count()
-    return render(request,'onlinenotes/uploadnotes.html',{'allnote':allnote,'cnt':cnt,'cnt1':cnt1,'mynote':mynote})
+    createnote = creatednotes.objects.all().filter(user=user)
+    cnt2 = createnote.count()
+    return render(request,'onlinenotes/uploadnotes.html',{'allnote':allnote,'cnt':cnt,'cnt1':cnt1,'cnt2':cnt2,'mynote':mynote})
 
 def changepass(request,id):
     if not request.user.is_authenticated:
@@ -248,6 +252,8 @@ def changepass(request,id):
     users = User.objects.get(id=id)
     mynote = notes.objects.all().filter(user=users)
     cnt1 = mynote.count()
+    createnote = creatednotes.objects.all().filter(user=users)
+    cnt2 = createnote.count()
     if request.method=="POST":
         newpass = request.POST['newpass']
         confpass = request.POST['confpass']
@@ -257,7 +263,7 @@ def changepass(request,id):
         myuser.set_password(newpass)
         myuser.save()
         return render(request,'onlinenotes/changepass.html',{'msg':'Password Updated Successfully','allnote':allnote,'cnt':cnt,'cnt1':cnt1,'mynote':mynote})
-    return render(request,'onlinenotes/changepass.html',{'allnote':allnote,'cnt':cnt,'cnt1':cnt1,'mynote':mynote})
+    return render(request,'onlinenotes/changepass.html',{'allnote':allnote,'cnt':cnt,'cnt1':cnt1,'cnt2':cnt2,'mynote':mynote})
 
 def viewallnotes(request,id):
     allnote = notes.objects.all().filter(status="accepted")
@@ -265,7 +271,9 @@ def viewallnotes(request,id):
     user = User.objects.get(id=id)
     mynote = notes.objects.all().filter(user=user)
     cnt1 = mynote.count()
-    return render(request,'onlinenotes/viewallnotes.html',{'allnote':allnote,'cnt':cnt,'cnt1':cnt1,'mynote':mynote})
+    createnote = creatednotes.objects.all().filter(user=user)
+    cnt2 = createnote.count()
+    return render(request,'onlinenotes/viewallnotes.html',{'allnote':allnote,'cnt':cnt,'cnt1':cnt1,'cnt2':cnt2,'mynote':mynote})
 
 def viewmynotes(request,id):
     allnote = notes.objects.all().filter(status="accepted")
@@ -273,7 +281,9 @@ def viewmynotes(request,id):
     user = User.objects.get(id=id)
     mynote = notes.objects.all().filter(user=user)
     cnt1 = mynote.count()
-    return render(request,'onlinenotes/viewmynotes.html',{'allnote':allnote,'cnt':cnt,'cnt1':cnt1,'mynote':mynote})
+    createnote = creatednotes.objects.all().filter(user=user)
+    cnt2 = createnote.count()
+    return render(request,'onlinenotes/viewmynotes.html',{'allnote':allnote,'cnt':cnt,'cnt1':cnt1,'cnt2':cnt2,'mynote':mynote})
 
 def searchnotes(request):
     results = []
@@ -290,8 +300,43 @@ def searchnotes(request):
     user = User.objects.get(id=request.user.id)
     mynote = notes.objects.all().filter(user=user)
     cnt1 = mynote.count()
-    context={'query': query, 'results': results,'allnote':allnote,'cnt':cnt,'mynote':mynote,'cnt1':cnt1}
+    createnote = creatednotes.objects.all().filter(user=user)
+    cnt2 = createnote.count()
+    context={'query': query, 'results': results,'allnote':allnote,'cnt':cnt,'mynote':mynote,'cnt2':cnt2,'cnt1':cnt1}
     return render(request, 'onlinenotes/searchnotes.html', context)
+
+def createnotes(request,id):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect('/')
+    if request.method == "POST":
+        users = User.objects.get(id=id)
+        title = request.POST['title']
+        description = request.POST['description']
+
+        create = creatednotes.objects.create(user=users,title=title,description=description)
+        create.save()
+        return studashboard(request,id)
+
+    return render(request, 'onlinenotes/createnotes.html')
+
+def showcreatednotes(request,id):
+    users = User.objects.get(id=id)
+    create = creatednotes.objects.filter(user=users)
+    return render(request, 'onlinenotes/showcreatednotes.html',{'create':create})
+
+def showinfo(request,id):
+    create = creatednotes.objects.filter(id=id)
+    p=""
+    q=""
+    for i in create:
+        p=i.description
+        q=i.title
+    return render(request, 'onlinenotes/showinfo.html',{'p':p,'q':q})
+
+def deletecreatednotes(request,id):
+    create = creatednotes.objects.filter(id=id)
+    create.delete()
+    return showcreatednotes(request,request.user.id)
 
 
 #Chat App

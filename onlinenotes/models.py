@@ -27,6 +27,14 @@ class notes(models.Model):
     def __str__(self):
         return self.user.username
 
+class creatednotes(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
+    description = models.CharField(max_length=100000000)
+
+    def __str__(self):
+        return self.user.username
+
 class Room(models.Model):
     name = models.CharField(max_length=1000)
 

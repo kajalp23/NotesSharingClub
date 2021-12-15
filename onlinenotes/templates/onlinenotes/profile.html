@@ -59,6 +59,16 @@
             </a>
             {% endif %}
           </li>
+          {% if user.is_superuser %}
+          {% else %}
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+            <a href="{% url 'createnotes' user.id %}" class="nav-link">
+              <i class="fa fa-fw fa-file" aria-hidden="true"></i>
+              <span class="nav-link-text">Create Notes</span>
+            </a>
+            
+          </li>
+          {% endif %}
           <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
             <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
               <i class="fa fa-fw fa-file"></i>
