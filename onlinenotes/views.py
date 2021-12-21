@@ -288,7 +288,7 @@ def viewmynotes(request,id):
 def searchnotes(request):
     results = []
     if request.method == "GET":
-        query = request.GET.get('subquery')
+        query = request.GET.get('subquery').lower()
         if query == '':
             query = 'None'
         try:
@@ -337,6 +337,9 @@ def deletecreatednotes(request,id):
     create = creatednotes.objects.filter(id=id)
     create.delete()
     return showcreatednotes(request,request.user.id)
+
+def searchbook(request):
+    return render(request,'onlinenotes/searchbook.html')
 
 
 #Chat App

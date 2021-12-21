@@ -32,6 +32,6 @@ urlpatterns = [
     path('showcreatednotes/<int:id>/', views.showcreatednotes, name='showcreatednotes'),
     path('showinfo/<int:id>/', views.showinfo, name='showinfo'),
     path('deletecreatednotes/<int:id>/', views.deletecreatednotes, name='deletecreatednotes'),
-
+    path('searchbook/', views.searchbook, name='searchbook'),
 
 ]
