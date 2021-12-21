@@ -1,0 +1,1 @@
+web: gunicorn notessharing.wsgi --log-file -
