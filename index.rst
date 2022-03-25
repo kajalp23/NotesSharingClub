@@ -2,48 +2,61 @@
 
 Link : https://github.com/kajalp23/NotesSharingClub/
 
-Project Timelines:
-  Task            Priority     Start Date    
-    
-  User Interface  High         Nov 2021   
-  Admin Panel     High         Nov 2021   
-  User Panel      High         Dec 2021   
+**Project Timelines:**
 
-Report:
-Problem Statement:
-  A platform where student & teacher both can share the notes.
+.. list-table:: 
+   :widths: 25 25 50
+   :header-rows: 1
 
-Features:
-  Two Panels :
+   * - Task 
+     - Priority
+     - Start Date 
+   * - User Interface
+     - High
+     - Nov 2021
+   * - Admin Panel
+     - High
+     - Nov 2021
+   * - User Panel
+     - High
+     - Dec 2021
 
-    1) Admin :
-      Login
-      Dashboard - accepted, rejected, pending notes
-      Search & delete Users
-      Manage Profile
-      Notes are available to all users only when they are accepted by admin.
+**Report:**
 
-    2) User (Teacher & Student) :
-      SignUp ,Login
-      Upload Notes , Download & View all Notes & my notes , Search Notes (supports all file formats)
-      Manage Profile
-      Discussion Forum
-      Change Password
+  Problem Statement:
+    A platform where student & teacher both can share the notes.
 
-Purpose :
-  Notes are available at one place at any time anywhere
-  Support all file formats
-  Students can also share the notes
-  Teacher - Student interaction
+  Features:
+    Two Panels :
+
+      1) Admin :
+        Login
+        Dashboard - accepted, rejected, pending notes
+        Search & delete Users
+        Manage Profile
+        Notes are available to all users only when they are accepted by admin.
+
+      2) User (Teacher & Student) :
+        SignUp ,Login
+        Upload Notes , Download & View all Notes & my notes , Search Notes (supports all file formats)
+        Manage Profile
+        Discussion Forum
+        Change Password
+
+  Purpose :
+    Notes are available at one place at any time anywhere
+    Support all file formats
+    Students can also share the notes
+    Teacher - Student interaction
   
   
-Software requirements:
-  Python
-  Django
-  SQLite
-  HTML
-  CSS
-  JS
+  Software requirements:
+    Python
+    Django
+    SQLite
+    HTML
+    CSS
+    JS
 
 
 
